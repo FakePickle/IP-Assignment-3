@@ -58,12 +58,20 @@ def creating_dictionary(dictionary,data_list):
 
 def finding_data_by_name(data_list):
     user_input = input()
+    temp_list = []
     for i in data_list:
         for k,v in i.items():
             if k==user_input:
                 for j in v:
                     if j['Time']>='06:00:00' and j['Time']<='19:00:00':
+                        temp_list.append(i)
                         print(i)
+    for k,v in temp_list[-1].items():
+        for j in v:
+            if j['Crossing'] == 'ENTER':
+                print(user_input+' is inside the campus')
+            else:
+                print(user_input+' is outside the campus')
 
 def finding_data_by_time(data_list):
     a = 1
