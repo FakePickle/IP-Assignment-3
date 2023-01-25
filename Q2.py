@@ -91,6 +91,19 @@ def finding_data_by_time(data_list):
         outline.write(i+'\n')
 
 def finding_data_by_gate(data_list):
-    a = 1
+    gate_input = input("Enter the gate number of your choice : ")
+    enter_gate = 0
+    exit_gate = 0
+    for i in data_list:
+        for k,v in i.items():
+            for j in v:
+                if j['Gate Number'] == gate_input:
+                    if j['Crossing'] == 'ENTER':
+                        enter_gate += 1
+                    elif j['Crossing'] == 'EXIT':
+                        exit_gate += 1
+    print('The Number of people entering from that gate are :',enter_gate)
+    print('The Number of people exiting from that gate are :',exit_gate)
 
-main()
+if __name__ == '__main__':
+    main()
