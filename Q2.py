@@ -77,9 +77,18 @@ def finding_data_by_name(data_list):
         print("There is no student named "+user_input)
 
 def finding_data_by_time(data_list):
+    outline = open('output_data.txt','w')
+    temp_list = []
     start_time = input("Enter the starting time : ")
     end_time = input("Enter the ending time : ")
-
+    for i in data_list:
+        for k,v in i.items():
+            for j in v:
+                if start_time <= j['Time'] and end_time > j['Time']:
+                    temp_list.append(k+', '+j['Crossing']+', '+j['Gate Number']+', '+j['Time'])
+    outline.write('TA, Crossing, Gate number, Time\n')
+    for i in temp_list:
+        outline.write(i+'\n')
 
 def finding_data_by_gate(data_list):
     a = 1
