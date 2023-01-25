@@ -66,15 +66,20 @@ def finding_data_by_name(data_list):
                     if j['Time']>='06:00:00' and j['Time']<='19:00:00':
                         temp_list.append(i)
                         print(i)
-    for k,v in temp_list[-1].items():
-        for j in v:
-            if j['Crossing'] == 'ENTER':
-                print(user_input+' is inside the campus')
-            else:
-                print(user_input+' is outside the campus')
+    try:
+        for k,v in temp_list[-1].items():
+            for j in v:
+                if j['Crossing'] == 'ENTER':
+                    print(user_input+' is inside the campus')
+                else:
+                    print(user_input+' is outside the campus')
+    except:
+        print("There is no student named "+user_input)
 
 def finding_data_by_time(data_list):
-    a = 1
+    start_time = input("Enter the starting time : ")
+    end_time = input("Enter the ending time : ")
+
 
 def finding_data_by_gate(data_list):
     a = 1
