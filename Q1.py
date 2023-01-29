@@ -17,5 +17,9 @@ def bottom_half(n,count = 2):
 #drivers code
 if __name__ == '__main__':
     n = int(input("Enter the size of the diamond : "))
-    top_half(n)
-    bottom_half(n)
+    if n == 1 or n == 2:
+        print("Diamond shape is not possible for the input 1 or 2")
+        pass
+    else:
+        top_half(n)
+        bottom_half(n)
