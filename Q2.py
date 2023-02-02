@@ -63,9 +63,9 @@ def finding_data_by_name(data_list):
         for k,v in i.items():
             if k==user_input:
                 for j in v:
-                    if j['Time']>='06:00:00' and j['Time']<='19:00:00':
+                    if j['Time']>='00:00:00' and j['Time']<='24:00:00':
                         temp_list.append(i)
-                        print(i)
+                        print(j['Gate Number']+', '+j['Crossing']+', '+j['Time'])
     try:
         for k,v in temp_list[-1].items():
             for j in v:
