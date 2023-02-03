@@ -13,26 +13,26 @@ class Evaluate:
 class Calculating_Factors:
     def __init__(self,assignment):
         self.assnmt = assignment
-    
+
     def factor1(self):
         unique_words = 0
         total_words = 0
-        for i in self.assnmt.split(' '):
+        for i in self.assnmt:
             counter = 0
-            for j in self.assnmt.split(' '):
+            for j in self.assnmt:
                 if i == j:
                     counter += 1
             if counter > 1:
                 unique_words += 1
             total_words += 1
         return unique_words/total_words
-    
+
     def factor2(self):
         top_occur = []
         total_words = 0
-        for i in self.assnmt.split(' '):
+        for i in self.assnmt:
             counter = 0
-            for j in self.assnmt.split(' '):
+            for j in self.assnmt:
                 if j == i:
                     counter += 1
             total_words += 1
@@ -50,7 +50,7 @@ class Calculating_Factors:
             if len(i) > 35 or len(i) < 5:
                 total_count_sentences += 1
         return total_count_sentences/len(sentences)
-    
+
     def factor4(self):
         frequency = 0
         total_words = 0
@@ -80,4 +80,21 @@ class Calculating_Factors:
             return 0
 
 def main():
-    
+    with open('file1.txt') as inline:
+        assignment = ''
+        inline = inline.read()
+        for i in inline:
+            if i == '\n':
+                assignment += ' '
+            else:
+                assignment += i
+    calculate = Calculating_Factors(assignment)
+    factor1 = calculate.factor1()
+    factor2 = calculate.factor2()
+    factor3 = calculate.factor3()
+    factor4 = calculate.factor4()
+    factor5 = calculate.factor5()
+    print(factor1,factor2,factor3,factor4,factor5)
+    print(round(Evaluate(factor1,factor2,factor3,factor4,factor5).calculate(),2))
+
+main()
