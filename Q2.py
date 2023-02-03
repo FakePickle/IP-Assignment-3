@@ -57,21 +57,23 @@ def creating_dictionary(dictionary,data_list):
             data_list.extend(temp_list)
 
 def finding_data_by_name(data_list):
-    user_input = input()
+    user_input = input('Enter student name : ')
+    user_input_time = input('Enter current time : ')
     temp_list = []
     for i in data_list:
         for k,v in i.items():
             if k==user_input:
                 for j in v:
                     if j['Time']>='00:00:00' and j['Time']<='24:00:00':
-                        temp_list.append(i)
                         print(j['Gate Number']+', '+j['Crossing']+', '+j['Time'])
+                    if j['Time']<=user_input_time:
+                        temp_list.append(i)
     try:
         for k,v in temp_list[-1].items():
             for j in v:
                 if j['Crossing'] == 'ENTER':
                     print(user_input+' is inside the campus')
-                else:
+                elif j['Crossing'] == 'EXIT':
                     print(user_input+' is outside the campus')
     except:
         print("There is no student named "+user_input)

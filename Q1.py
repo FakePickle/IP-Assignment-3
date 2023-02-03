@@ -8,7 +8,9 @@ def top_half(n,count = 0):
 
 #printing the bottom half of the diamond using recursion
 def bottom_half(n,count = 2):
-    if n == 2:
+    if n == 1:
+        pass
+    elif n == 2:
         print('* '*count + ' '*((n-2)*4) + '* '*count)
     else:
         print('* '*count + ' '*((n-2)*4) + '* '*count)
@@ -17,9 +19,5 @@ def bottom_half(n,count = 2):
 #drivers code
 if __name__ == '__main__':
     n = int(input("Enter the size of the diamond : "))
-    if n == 1 or n == 2:
-        print("Diamond shape is not possible for the input 1 or 2")
-        pass
-    else:
-        top_half(n)
-        bottom_half(n)
+    top_half(n)
+    bottom_half(n)
