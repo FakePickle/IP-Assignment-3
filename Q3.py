@@ -1,3 +1,5 @@
+import random
+
 class Evaluate:
     def __init__(self,factor1,factor2,factor3,factor4,factor5):
         self.F1 = factor1
@@ -17,31 +19,50 @@ class Calculating_Factors:
     def factor1(self):
         unique_words = 0
         total_words = 0
-        for i in self.assnmt:
-            counter = 0
-            for j in self.assnmt:
-                if i == j:
-                    counter += 1
-            if counter > 1:
-                unique_words += 1
-            total_words += 1
+        for i in self.assnmt.split(' '):
+            if i == '':
+                pass
+            else:
+                counter = 0
+                for j in self.assnmt.split(' '):
+                    if j == '':
+                        pass
+                    else:
+                        if i == j:
+                            counter += 1
+                if counter == 1:
+                    unique_words += 1
+                total_words += 1
         return unique_words/total_words
 
     def factor2(self):
-        top_occur = []
-        total_words = 0
-        for i in self.assnmt:
-            counter = 0
-            for j in self.assnmt:
-                if j == i:
-                    counter += 1
-            total_words += 1
-            top_occur.append(counter)
-        sorted_top_occur = sorted(top_occur,reverse=True)
-        sum_top_occur = 0
-        for i in range(5):
-            sum_top_occur += sorted_top_occur[i]
-        return sum_top_occur/total_words
+        d={}
+        for i in self.assnmt.split(' '):
+            if i == '':
+                pass
+            elif i.lower() not in d:
+                d[i.lower()] = 1
+            else:
+                d[i.lower()] += 1
+        new_d = {}
+        sorted_values = sorted(d.values(),reverse=True)
+        for i in sorted_values:
+            for k in d.keys():
+                if d[k] == i:
+                    new_d[k] = d[k]
+        top_occur = 0
+        sorted_dict = {}
+        keys = list(new_d.keys())
+        values = list(new_d.values())
+        if len(d) >= 5:
+            for i in range(5):
+                sorted_dict[keys[i]] = values[i]
+                top_occur += values[i]
+        else:
+            for k,v in d.items():
+                sorted_dict[k] = v
+                top_occur += v
+        return top_occur/len(self.assnmt),sorted_dict,d
 
     def factor3(self):
         sentences = self.assnmt.split('. ')
@@ -79,8 +100,8 @@ class Calculating_Factors:
         else:
             return 0
 
-def main():
-    with open('file1.txt') as inline:
+def main(filename):
+    with open(filename) as inline:
         assignment = ''
         inline = inline.read()
         for i in inline:
@@ -90,11 +111,21 @@ def main():
                 assignment += i
     calculate = Calculating_Factors(assignment)
     factor1 = calculate.factor1()
-    factor2 = calculate.factor2()
+    factor2,sorted_dictionary,dictionary = calculate.factor2()
     factor3 = calculate.factor3()
     factor4 = calculate.factor4()
     factor5 = calculate.factor5()
-    print(factor1,factor2,factor3,factor4,factor5)
-    print(round(Evaluate(factor1,factor2,factor3,factor4,factor5).calculate(),2))
+    with open('scores.txt','w+') as outline:
+        outline.write(filename+'\n')
+        outline.write('Score '+str(Evaluate(factor1, factor2, factor3, factor4, factor5).calculate())+'\n')
+        sort = ''
+        for i in sorted_dictionary.keys():
+            sort += i + ' '
+        outline.write(sort+'\n')
+        shuffle = [i for i in dictionary.keys()]
+        outline.write(str(random.choices(shuffle,k = 5))+'\n\n')
 
-main()
+user_input_file_number = int(input('Enter the number of files you want to calculate assessment for : '))
+for i in range(user_input_file_number):
+    filename = input('Enter the name of the file : ')
+    main(filename)

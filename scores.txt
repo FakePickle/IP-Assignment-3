@@ -1,0 +1,5 @@
+File1.txt
+Score 4.719879538750581
+the a college of is 
+['higher', 'various', 'students', 'should', 'opportunities']
+

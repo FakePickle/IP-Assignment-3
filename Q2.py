@@ -20,7 +20,7 @@ class Off_campus:
                 if self.name == k:
                     temp_list.extend(v)
                     temp_list.extend(temp_dict[self.name])
-                    day_scholar_cross[self.name] = temp_list
+                    day_scholar_cross[k] = temp_list
                 else:
                     day_scholar_cross = temp_dict
         return day_scholar_cross
