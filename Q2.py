@@ -1,25 +1,3 @@
-def main():
-    print('Welcome to the Off_campus Program\n'
-    '1. Getting data by inputting student name and whether he is in the campus or not\n'
-    '2. Getting all the students who entered the campus during a certain that is inputted by the user\n'
-    '3. Getting all the students who entered through the gate from the specific gate number\n'
-    '4. Exit')
-    temp_dict = {}
-    Data = []
-    creating_dictionary(temp_dict,Data)
-    while True:
-        user_input = int(input('Please enter you choice : '))
-        if(user_input==1):
-            finding_data_by_name(Data)
-        elif(user_input==2):
-            finding_data_by_time(Data)
-        elif(user_input==3):
-            finding_data_by_gate(Data)
-        elif(user_input==4):
-            break
-        else:
-            print("Invalid Input")
-
 class Off_campus:
     def __init__(self,name,crossing,Gate_number,Time):
         self.name = name
@@ -52,6 +30,8 @@ def creating_dictionary(dictionary,data_list):
         line_split = infile.read().splitlines()
         for i in range(1,len(line_split)):
             line_split[i] = line_split[i].split(', ')
+        line_split.sort(key=lambda x:x[3])
+        for i in range(1,len(line_split)):
             comma_split = Off_campus(line_split[i][0],line_split[i][1],line_split[i][2],line_split[i][3])
             temp_list = [comma_split.dictionary(dictionary)]
             data_list.extend(temp_list)
@@ -72,9 +52,9 @@ def finding_data_by_name(data_list):
         for k,v in temp_list[-1].items():
             for j in v:
                 if j['Crossing'] == 'ENTER':
-                    print(user_input+' is inside the campus')
+                    print(user_input+' is inside the campus at '+user_input_time)
                 elif j['Crossing'] == 'EXIT':
-                    print(user_input+' is outside the campus')
+                    print(user_input+' is outside the campus at '+user_input_time)
     except:
         print("There is no student named "+user_input)
 
@@ -107,5 +87,27 @@ def finding_data_by_gate(data_list):
     print('The Number of people entering from that gate are :',enter_gate)
     print('The Number of people exiting from that gate are :',exit_gate)
 
+def main(Data):
+    print('Welcome to the Off_campus Program\n'
+    '1. Getting data by inputting student name and whether he is in the campus or not\n'
+    '2. Getting all the students who entered the campus during a certain that is inputted by the user\n'
+    '3. Getting all the students who entered through the gate from the specific gate number\n'
+    '4. Exit')
+    while True:
+        user_input = input('Please enter you choice : ')
+        if(user_input=='1'):
+            finding_data_by_name(Data)
+        elif(user_input=='2'):
+            finding_data_by_time(Data)
+        elif(user_input=='3'):
+            finding_data_by_gate(Data)
+        elif(user_input=='4'):
+            break
+        else:
+            print("Invalid Input")
+
 if __name__ == '__main__':
-    main()
+    temp_dict = {}
+    Data = []
+    creating_dictionary(temp_dict,Data)
+    main(Data)
