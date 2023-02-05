@@ -20,16 +20,16 @@ class Calculating_Factors:
         unique_words = []
         total_words = 0
         for i in self.assnmt.split(' '):
-            i = i.strip(',. ')
-            if i not in unique_words:
-                unique_words.append(i)
+            j = i.strip(',.;: ')
+            if j not in unique_words:
+                unique_words.append(j)
             total_words += 1
         return len(unique_words)/total_words
 
     def factor2(self):
         d={}
         for i in self.assnmt.split(' '):
-            j = i.strip(',. ')
+            j = i.strip(',.;: ')
             if j.isalpha():
                 if i == '':
                     pass

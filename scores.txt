@@ -1,5 +1,5 @@
-file2.txt
-Score 14.5
-mango banana gucci 
-['banana', 'mango', 'banana', 'gucci', 'banana']
+File3.txt
+Score 8.294117647058822
+mango gucci,,, is vik. hello,, 
+['gucci.', 'is', 'vik', 'mango', 'no']
 

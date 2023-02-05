@@ -40,6 +40,7 @@ def finding_data_by_name(data_list):
     user_input = input('Enter student name : ')
     user_input_time = input('Enter current time : ')
     temp_list = []
+    temp_list_2 = []
     outline = open('output_data_q1.txt','w')
     outline.write(user_input+'\n')
     for i in data_list:
@@ -50,6 +51,9 @@ def finding_data_by_name(data_list):
                         outline.write(str([j])+'\n')
                     if j['Time']<=user_input_time:
                         temp_list.append(i)
+                    else:
+                        temp_list_2.append(i)
+
     try:
         for k,v in temp_list[-1].items():
             for j in v:
@@ -58,17 +62,25 @@ def finding_data_by_name(data_list):
                 elif j['Crossing'] == 'EXIT':
                     print(user_input+' is outside the campus at '+user_input_time)
     except:
-        print("There is no student named "+user_input)
+        try:
+            for k,v in temp_list_2[0].items():
+                for j in v:
+                    if j['Crossing'] == 'ENTER':
+                        print(user_input+' is outside the campus at '+user_input_time)
+                    elif j['Crossing'] == 'EXIT':
+                        print(user_input+' is inside the campus at '+user_input_time)
+        except:    
+            print("There is no student named "+user_input)
 
 def finding_data_by_time(data_list):
-    outline = open('output_data.txt','w')
+    outline = open('output_data_q2.txt','w')
     temp_list = []
     start_time = input("Enter the starting time : ")
     end_time = input("Enter the ending time : ")
     for i in data_list:
         for k,v in i.items():
             for j in v:
-                if start_time <= j['Time'] and end_time > j['Time']:
+                if start_time <= j['Time'] <= end_time:
                     temp_list.append(k+', '+j['Crossing']+', '+j['Gate Number']+', '+j['Time'])
     outline.write('TA, Crossing, Gate number, Time\n')
     for i in temp_list:
