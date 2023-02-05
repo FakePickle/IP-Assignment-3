@@ -1,5 +1,5 @@
-File1.txt
-Score 4.719879538750581
-the a college of is 
-['higher', 'various', 'students', 'should', 'opportunities']
+file2.txt
+Score 14.5
+mango banana gucci 
+['banana', 'mango', 'banana', 'gucci', 'banana']
 

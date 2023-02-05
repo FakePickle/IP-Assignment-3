@@ -33,19 +33,21 @@ def creating_dictionary(dictionary,data_list):
         line_split.sort(key=lambda x:x[3])
         for i in range(1,len(line_split)):
             comma_split = Off_campus(line_split[i][0],line_split[i][1],line_split[i][2],line_split[i][3])
-            temp_list = [comma_split.dictionary(dictionary)]
-            data_list.extend(temp_list)
+            temp_list = comma_split.dictionary(dictionary)
+            data_list.append(temp_list)
 
 def finding_data_by_name(data_list):
     user_input = input('Enter student name : ')
     user_input_time = input('Enter current time : ')
     temp_list = []
+    outline = open('output_data_q1.txt','w')
+    outline.write(user_input+'\n')
     for i in data_list:
         for k,v in i.items():
             if k==user_input:
                 for j in v:
                     if j['Time']>='00:00:00' and j['Time']<='24:00:00':
-                        print(j['Gate Number']+', '+j['Crossing']+', '+j['Time'])
+                        outline.write(str([j])+'\n')
                     if j['Time']<=user_input_time:
                         temp_list.append(i)
     try:
