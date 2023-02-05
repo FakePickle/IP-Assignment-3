@@ -9,6 +9,16 @@ class Course:
         difference = max(grade_check)
         index_difference = grade_check.index(difference)+1
         return (grade_check[index_difference] + grade_check[index_difference-1])/2
+    
+    def doGrade(self,student_percentile):
+        for i in self.policy:
+            if student_percentile > i:
+                indice = self.policy.index(i)
+                break
+            else:
+                indice = self.policy.index(i)+1
+        return self.grade[indice]
+
 
 class student:
     def __init__(self,name,rollno,marks_list,max_marks_list,assessments):
@@ -25,23 +35,16 @@ class student:
                 student_percentile += (self.assessments[j][1]*i/self.max_marks[j])
         return student_percentile
 
-    def doGrade(self,student_percentile):
-        for i in self.policy:
-            if student_percentile > i:
-                indice = self.policy.index(i)
-                break
-            else:
-                indice = self.policy.index(i)+1
-        return self.grade[indice]
-
 class IP:
-    def __init__(self,course_name,credit,assessments,policy,grade_list,cutoff):
+    def __init__(self,rollno,course_name,credit,assessments,policy,grade_list,cutoff,total_marks):
+        self.rollno = rollno
         self.course_name = course_name
         self.credits = credit
+        self.total_marks = total_marks
         self.assessments = assessments
         self.cutoff = cutoff
         self.policy = policy
-        self.student_grades = grade_list
+        self.student_grade = grade_list
     
     def GetSummary(self,grading_summary):
         print('-'*50)
@@ -50,3 +53,9 @@ class IP:
         print('\t'+self.assessments)
         print('\t'+self.cutoff)
         print('\t'+grading_summary)
+        print('-'*50)
+    
+    def student_grade(self,outline):
+        outline.write(self.rollno,self.total_marks,self.student_grade)
+    
+    def search(self,user)
