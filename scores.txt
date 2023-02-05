@@ -1,5 +1,5 @@
 File3.txt
-Score 8.294117647058822
-mango gucci,,, is vik. hello,, 
-['gucci.', 'is', 'vik', 'mango', 'no']
+Score 7.161764705882352
+mango banana::: gucci,,, gucci,.,;: is 
+['gucci,,,', 'vik.', 'no', 'gucci,,,', 'no']
 

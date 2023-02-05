@@ -55,7 +55,6 @@ class Calculating_Factors:
             for k,v in d.items():
                 sorted_dict[k] = v
                 top_occur += v
-        print(len(self.assnmt.split(' ')))
         return top_occur/len(self.assnmt.split(' ')),sorted_dict,d
 
     def factor3(self):
@@ -68,24 +67,30 @@ class Calculating_Factors:
 
     def factor4(self):
         frequency = 0
+        punctuation = []
         total_words = 0
         for i in self.assnmt.split(' '):
-            full_stops = 0
-            comma = 0
-            colon = 0
-            semi_colon = 0
+            temp_list = []
             for j in i:
-                if j == '.':
-                    full_stops += 1
-                elif j == ',':
-                    comma += 1
-                elif j == ':':
-                    colon += 1
-                elif j == ';':
-                    semi_colon += 1
-            if full_stops > 1 or comma > 1 or colon > 1 or semi_colon > 1:
-                frequency += 1
+                if j.isalpha():
+                    pass
+                else:
+                    temp_list.append(j)
             total_words += 1
+            punctuation.append(temp_list)
+        for i in punctuation:
+            if i == []:
+                pass
+            elif len(i)>1:
+                counter = 0
+                temp_var = i[0]
+                for j in i:
+                    if temp_var == i[0]:
+                        counter += 1
+                    else:
+                        counter = 0
+                        break
+                frequency += counter
         return frequency/total_words
 
     def factor5(self):
@@ -111,17 +116,17 @@ def main(filename):
     factor5 = calculate.factor5()
     return factor1,factor2,factor3,factor4,factor5,sorted_dictionary,dictionary
 
-user_input_file_number = int(input('Enter the number of files you want to calculate assessment for : '))
-with open('scores.txt','w') as outline:
-    for i in range(user_input_file_number):
-        filename = input('Enter the name of the file : ')
-        print(main(filename))
-        factor1,factor2,factor3,factor4,factor5,sorted_dictionary,dictionary = main(filename)
-        outline.write(filename+'\n')
-        outline.write('Score '+str(Evaluate(factor1, factor2, factor3, factor4, factor5).calculate())+'\n')
-        sort = ''
-        for i in sorted_dictionary.keys():
-            sort += i + ' '
-        outline.write(sort+'\n')
-        shuffle = [i for i in dictionary.keys()]
-        outline.write(str(random.choices(shuffle,k = 5))+'\n\n')
+def main():
+    user_input_file_number = int(input('Enter the number of files you want to calculate assessment for : '))
+    with open('scores.txt','w') as outline:
+        for i in range(user_input_file_number):
+            filename = input('Enter the name of the file : ')
+            factor1,factor2,factor3,factor4,factor5,sorted_dictionary,dictionary = main(filename)
+            outline.write(filename+'\n')
+            outline.write('Score '+str(Evaluate(factor1, factor2, factor3, factor4, factor5).calculate())+'\n')
+            sort = ''
+            for i in sorted_dictionary.keys():
+                sort += i + ' '
+            outline.write(sort+'\n')
+            shuffle = [i for i in dictionary.keys()]
+            outline.write(str(random.choices(shuffle,k = 5))+'\n\n')
