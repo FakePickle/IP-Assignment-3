@@ -91,7 +91,7 @@ class Calculating_Factors:
         return frequency/total_words
 
     def factor5(self):
-        if len(self.assnmt) > 750:
+        if len(self.assnmt.split( )) > 750:
             return 1
         else:
             return 0
@@ -119,7 +119,6 @@ def main():
         for i in range(user_input_file_number):
             filename = input('Enter the name of the file : ')
             factor1,factor2,factor3,factor4,factor5,sorted_dictionary,dictionary = calc(filename)
-            print(calc(filename))
             outline.write(filename+'\n')
             outline.write('Score '+str(Evaluate(factor1, factor2, factor3, factor4, factor5).calculate())+'\n')
             sort = ''
