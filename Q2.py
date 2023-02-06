@@ -72,11 +72,13 @@ def finding_data_by_time(dictionary):
     for k,v in dictionary.items():
         for j in v:
             if start_time <= j['Time'] <= end_time:
-                temp_list.append(j)
-    temp_list = sorted(temp_list, key = lambda x: x['Time'])
+                temp_list.append(k)
+                temp_list.append(j['Crossing'])
+                temp_list.append(j['Gate Number'])
+                temp_list.append(j['Time'])
     outline.write('TA, Crossing, Gate number, Time\n')
-    for i in temp_list:
-        outline.write(str(i)+'\n')
+    for i in range(0,len(temp_list),4):
+        outline.write(temp_list[i]+', '+temp_list[i+1]+', '+temp_list[i+2]+', '+temp_list[i+3]+'\n')
 
 def finding_data_by_gate(dictionary):
     gate_input = input("Enter the gate number of your choice : ")
