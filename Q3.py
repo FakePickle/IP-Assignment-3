@@ -38,7 +38,7 @@ class Calculating_Factors:
                 else:
                     d[i.lower()] += 1
         new_d = {}
-        sorted_values = sorted(d.values())
+        sorted_values = sorted(d.values(),reverse=True)
         for i in sorted_values:
             for k in d.keys():
                 if d[k] == i:
@@ -60,37 +60,34 @@ class Calculating_Factors:
     def factor3(self):
         sentences = self.assnmt.split('. ')
         total_count_sentences = 0
+        print(sentences)
         for i in sentences:
-            if len(i) > 35 or len(i) < 5:
+            if len(i.split()) > 35 or len(i.split()) < 5:
                 total_count_sentences += 1
         return total_count_sentences/len(sentences)
 
     def factor4(self):
         frequency = 0
-        punctuation = []
         total_words = 0
         for i in self.assnmt.split(' '):
-            temp_list = []
+            full_stops = 0
+            comma = 0
+            colon = 0
+            semi_colon = 0
             for j in i:
                 if j.isalpha():
                     pass
-                else:
-                    temp_list.append(j)
+                elif j == '.':
+                    full_stops += 1
+                elif j == ',':
+                    comma += 1
+                elif j == ':':
+                    colon += 1
+                elif j == ';':
+                    semi_colon += 1
+            if full_stops > 1 or comma > 1 or colon > 1 or semi_colon > 1:
+                frequency += 1
             total_words += 1
-            punctuation.append(temp_list)
-        for i in punctuation:
-            if i == []:
-                pass
-            elif len(i)>1:
-                counter = 0
-                temp_var = i[0]
-                for j in i:
-                    if temp_var == i[0]:
-                        counter += 1
-                    else:
-                        counter = 0
-                        break
-                frequency += counter
         return frequency/total_words
 
     def factor5(self):
@@ -99,7 +96,7 @@ class Calculating_Factors:
         else:
             return 0
 
-def main(filename):
+def calc(filename):
     with open(filename) as inline:
         assignment = ''
         inline = inline.read()
@@ -121,7 +118,8 @@ def main():
     with open('scores.txt','w') as outline:
         for i in range(user_input_file_number):
             filename = input('Enter the name of the file : ')
-            factor1,factor2,factor3,factor4,factor5,sorted_dictionary,dictionary = main(filename)
+            factor1,factor2,factor3,factor4,factor5,sorted_dictionary,dictionary = calc(filename)
+            print(calc(filename))
             outline.write(filename+'\n')
             outline.write('Score '+str(Evaluate(factor1, factor2, factor3, factor4, factor5).calculate())+'\n')
             sort = ''
@@ -130,3 +128,5 @@ def main():
             outline.write(sort+'\n')
             shuffle = [i for i in dictionary.keys()]
             outline.write(str(random.choices(shuffle,k = 5))+'\n\n')
+
+main()
