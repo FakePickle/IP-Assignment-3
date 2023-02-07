@@ -1,5 +1,5 @@
 File3.txt
-Score 8.78216180371353
-and a is to the 
-['evidence', 'making', 'and', 'processes.', 'host']
+Score 8.382936507936508
+the a and of as 
+['input', 'determine', 'queries', 'or', 'start']
 

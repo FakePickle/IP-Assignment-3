@@ -9,8 +9,7 @@ class Course:
             return self.policy[index]
         else:
             difference = max(grade_check)
-            index_difference = grade_check.index(difference)+1
-            return (grade_list[index_difference] + grade_list[index_difference-1])/2
+            return (grade_list[grade_check.index(difference)+1] + grade_list[grade_check.index(difference)])/2
 
     def doGrade(self,student_percentile):
         for i in self.policy:
@@ -31,25 +30,33 @@ class student:
     def calculating_marks(self):
         student_percentile = 0
         for i in range(len(self.marks)):
-            student_percentile += (self.assessments[i][1]*self.marks[i]/self.max_marks[i])
+            student_percentile += (self.assessments[i][1]*int(self.marks[i])/self.max_marks[i])
         return student_percentile
 
 class IP:
-    def __init__(self,student_list,course_name,credit,assessments,grade_list,cutoff):
+    def __init__(self,student_list,assessments,grade_list,cutoff):
         self.student_list = student_list
-        self.course_name = course_name
-        self.credits = credit
+        self.course_name = input('Enter course name : ')
+        self.credits = int(input('Enter the credits for that course : '))
         self.assessments = assessments
         self.cutoff = cutoff
         self.student_grade_list = grade_list
     
     def GetSummary(self,grading_summary):
+        keys = sorted(grading_summary.keys())
+        grading_summary = {i: grading_summary[i] for i in keys}
         print('-'*50)
         print('\t\tCOURSE INFO')
-        print('\t\t'+self.course_name,self.credits)
-        print('\t'+str(self.assessments))
-        print('\t'+str(self.cutoff))
-        print('\t'+str(grading_summary))
+        print('\t   Course '+self.course_name+'  Credits '+str(self.credits))
+        for i in self.assessments:
+            print(i[0]+'-'+str(+i[1]),end = ', ')
+        print('\n\t\t', end='')
+        for i in self.cutoff:
+            print(i,end = ' ')
+        print('\n\t    ',end='')
+        for k,v in grading_summary.items():
+            print(k+'-'+str(v),end = ', ')
+        print()
         print('-'*50)
     
     def student_grade(self,rollno,totalmarks):
@@ -68,9 +75,7 @@ class IP:
 def main():
     policy = [80,65,50,40]
     assessments = [('labs',30),('midsems',15),('assignments',30),('endsem',25)]
-    credits = 4
     max_marks = [100,40,45,100]
-    course_name = 'IP'
     total_marks = []
     marks_list = []
     grade_list = []
@@ -81,21 +86,15 @@ def main():
             marks = 0
             student_marks = i.split(', ')
             student_list.append(student_marks[0])
-            for j in range(1,len(student_marks)):
-                student_marks[j] = eval(student_marks[j])
-                marks += student_marks[j]
+            for j in range(1,len(student_marks)): marks += eval(student_marks[j])
             total_marks.append(marks)
             Student = student(student_marks[0],student_marks[1::],max_marks,assessments)
             marks_list.append(Student.calculating_marks())
     for i in range(len(policy)):
-        temp_list = []
-        for j in marks_list:
-            if abs(j-policy[i]) <= 4 :
-                temp_list.append(j)
+        temp_list = [j for j in marks_list if abs(j - policy[i])<=2]
         policy[i] = Course(policy).final_cutoff(temp_list,i)
     course = Course(policy)
-    for i in range(len(marks_list)):
-        grade_list.append(course.doGrade(marks_list[i]))
+    grade_list = [course.doGrade(i) for i in marks_list]
     grading_summary = {}
     for i in grade_list:
         count = 0
@@ -103,7 +102,7 @@ def main():
             if i == j:
                 count += 1
         grading_summary[i] = count
-    IP_Course = IP(student_list,course_name,credits,assessments,grade_list,policy)
+    IP_Course = IP(student_list,assessments,grade_list,policy)
     print('\tWELCOME TO AUTOMATIC GRADING SYSTEM FOR IP COURSE\n'
         '1. Get a Summary\n'
         '2. Grade the students\n'

@@ -29,14 +29,15 @@ class Calculating_Factors:
     def factor2(self):
         d={}
         for i in self.assnmt.split(' '):
-            j = i.strip(',.;: ')
+            j = i.strip(',.;:()/- ')
+            print(j)
             if j.isalpha():
-                if i == '':
+                if j == '':
                     pass
-                elif i.lower() not in d:
-                    d[i.lower()] = 1
+                elif j.lower() not in d:
+                    d[j.lower()] = 1
                 else:
-                    d[i.lower()] += 1
+                    d[j.lower()] += 1
         new_d = {}
         sorted_values = sorted(d.values(),reverse=True)
         for i in sorted_values:
