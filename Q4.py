@@ -55,7 +55,7 @@ class IP:
         print('\n\t\t', end='')
         for i in self.cutoff:
             print(i,end = ' ')
-        print('\n\t    ',end='')
+        print('\n\t',end='')
         for k,v in grading_summary.items():
             print(k+'-'+str(v),end = ', ')
         print()
@@ -64,7 +64,7 @@ class IP:
     def student_grade(self,rollno,totalmarks):
         outline = open('IP_Grades.txt','w')
         for i in range(len(rollno)):
-            outline.write(str(rollno[i])+' '+str(totalmarks[i])+' '+str(self.student_grade_list[i])+'\n')
+            outline.write(str(rollno[i])+', '+str(totalmarks[i])+', '+str(self.student_grade_list[i])+'\n')
 
     def search(self,user_input_rollno,markslist,totalmarks):
         for i in self.student_list:
@@ -94,6 +94,7 @@ def main():
             marks_list.append(Student.calculating_marks())
     for i in range(len(policy)):
         temp_list = [j for j in marks_list if abs(j - policy[i])<=2]
+        temp_list.sort(reverse=True)
         policy[i] = Course(policy).final_cutoff(temp_list,i)
     course = Course(policy)
     grade_list = [course.doGrade(i) for i in marks_list]

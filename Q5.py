@@ -55,7 +55,7 @@ def search(student_grade_list,student_list,user_input_rollno,markslist,totalmark
 def main():
     policy = [80,65,50,40]
     assessments = [('labs',30),('midsems',15),('assignments',30),('endsem',25)]
-    max_marks = [100,40,45,100]
+    max_marks = [30,15,30,25]
     course_name = 'IP'
     credits = 4
     grade = ['A','B','C','D','F']
