@@ -1,3 +1,5 @@
+import time
+
 class Course:
     def __init__(self,policy):
         self.policy = policy
@@ -63,7 +65,7 @@ class IP:
         outline = open('IP_Grades.txt','w')
         for i in range(len(rollno)):
             outline.write(str(rollno[i])+' '+str(totalmarks[i])+' '+str(self.student_grade_list[i])+'\n')
-    
+
     def search(self,user_input_rollno,markslist,totalmarks):
         for i in self.student_list:
             if i == user_input_rollno:
@@ -75,7 +77,7 @@ class IP:
 def main():
     policy = [80,65,50,40]
     assessments = [('labs',30),('midsems',15),('assignments',30),('endsem',25)]
-    max_marks = [100,40,45,100]
+    max_marks = [30,15,30,25]
     total_marks = []
     marks_list = []
     grade_list = []

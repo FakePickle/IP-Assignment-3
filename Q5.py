@@ -1,3 +1,5 @@
+import time
+
 def final_cutoff(policy,grade_list,index):
     grade_check = [abs(grade_list[i]-grade_list[i+1]) for i in range(0,len(grade_list)-1)]
     if grade_check == []:
@@ -17,7 +19,7 @@ def doGrade(policy,student_percentile,grade):
 
 def calculating_marks(assessments,marks,max_marks):
     student_percentile = 0
-    for i in range(len(marks)): student_percentile += (assessments[i][1]*marks[i]/max_marks[i])
+    for i in range(len(marks)): student_percentile += (assessments[i][1]*int(marks[i])/max_marks[i])
     return student_percentile
 
 def GetSummary(course_name,credits,assessments,cutoff,grading_summary):
@@ -25,11 +27,11 @@ def GetSummary(course_name,credits,assessments,cutoff,grading_summary):
     grading_summary = {i: grading_summary[i] for i in keys}
     print('-'*50)
     print('\t\tCOURSE INFO')
-    print('\t   Course '+self.course_name+'  Credits '+str(self.credits))
-    for i in self.assessments:
+    print('\t   Course '+course_name+'  Credits '+str(credits))
+    for i in assessments:
         print(i[0]+'-'+str(+i[1]),end = ', ')
     print('\n\t\t', end='')
-    for i in self.cutoff:
+    for i in cutoff:
         print(i,end = ' ')
     print('\n\t    ',end='')
     for k,v in grading_summary.items():
@@ -54,6 +56,8 @@ def main():
     policy = [80,65,50,40]
     assessments = [('labs',30),('midsems',15),('assignments',30),('endsem',25)]
     max_marks = [100,40,45,100]
+    course_name = 'IP'
+    credits = 4
     grade = ['A','B','C','D','F']
     total_marks = []
     marks_list = []
@@ -70,7 +74,7 @@ def main():
     for i in range(len(policy)):
         temp_list = [j for j in marks_list if abs(j - policy[i])<=2]
         policy[i] = final_cutoff(policy,temp_list,i)
-    grade_list = [course.doGrade(i) for i in marks_list]
+    grade_list = [doGrade(policy,i,grade) for i in marks_list]
     grading_summary = {}
     for i in grade_list:
         count = 0
