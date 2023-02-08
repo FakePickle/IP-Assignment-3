@@ -52,7 +52,7 @@ class IP:
         print('\t   Course '+self.course_name+'  Credits '+str(self.credits))
         for i in self.assessments:
             print(i[0]+'-'+str(+i[1]),end = ', ')
-        print('\n\t\t', end='')
+        print('\n\t', end='')
         for i in self.cutoff:
             print(i,end = ' ')
         print('\n\t',end='')
