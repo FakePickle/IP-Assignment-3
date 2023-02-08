@@ -1,5 +1,5 @@
 File3.txt
 Score 8.382936507936508
 the a and of as 
-['input', 'determine', 'queries', 'or', 'start']
+['the', 'you', 'given', 'list', 'through']
 

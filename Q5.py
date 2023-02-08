@@ -40,22 +40,28 @@ def GetSummary(course_name,credits,assessments,cutoff,grading_summary):
     print('-'*50)
 
 def student_grade(rollno,totalmarks,student_grade_list):
+    start = time.time()
     outline = open('IP_Grades.txt','w')
     for i in range(len(rollno)):
         outline.write(str(rollno[i])+' '+str(totalmarks[i])+' '+str(student_grade_list[i])+'\n')
+    end = time.time()
+    print('Time =',end - start)
 
 def search(student_grade_list,student_list,user_input_rollno,markslist,totalmarks):
+    start = time.time()
     for i in student_list:
         if i == user_input_rollno:
             print(user_input_rollno)
             print('Marks in assessments : '+str(markslist[student_list.index(i)]))
             print('Total Marks : '+str(totalmarks[student_list.index(i)]))
             print('Grade : '+str(student_grade_list[student_list.index(i)]))
+    end = time.time()
+    print('Time =',end - start)
 
 def main():
     policy = [80,65,50,40]
     assessments = [('labs',30),('midsems',15),('assignments',30),('endsem',25)]
-    max_marks = [30,15,30,25]
+    max_marks = [100,100,100,100]
     course_name = 'IP'
     credits = 4
     grade = ['A','B','C','D','F']

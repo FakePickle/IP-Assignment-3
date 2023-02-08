@@ -30,7 +30,6 @@ class Calculating_Factors:
         d={}
         for i in self.assnmt.split(' '):
             j = i.strip(',.;:()/- ')
-            print(j)
             if j.isalpha():
                 if j == '':
                     pass
@@ -61,10 +60,10 @@ class Calculating_Factors:
     def factor3(self):
         sentences = self.assnmt.split('. ')
         total_count_sentences = 0
-        print(sentences)
         for i in sentences:
             if len(i.split()) > 35 or len(i.split()) < 5:
                 total_count_sentences += 1
+        print(total_count_sentences,len(sentences))
         return total_count_sentences/len(sentences)
 
     def factor4(self):
