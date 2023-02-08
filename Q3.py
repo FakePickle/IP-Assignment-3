@@ -118,6 +118,7 @@ def main():
     with open('scores.txt','w') as outline:
         for i in range(user_input_file_number):
             filename = input('Enter the name of the file : ')
+            print(calc(filename))
             factor1,factor2,factor3,factor4,factor5,sorted_dictionary,dictionary = calc(filename)
             outline.write(filename+'\n')
             outline.write('Score '+str(Evaluate(factor1, factor2, factor3, factor4, factor5).calculate())+'\n')

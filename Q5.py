@@ -45,7 +45,7 @@ def student_grade(rollno,totalmarks,student_grade_list):
     for i in range(len(rollno)):
         outline.write(str(rollno[i])+' '+str(totalmarks[i])+' '+str(student_grade_list[i])+'\n')
     end = time.time()
-    print('Time =',end - start)
+    return 'Time = '+ str(end - start)
 
 def search(student_grade_list,student_list,user_input_rollno,markslist,totalmarks):
     start = time.time()
@@ -56,7 +56,7 @@ def search(student_grade_list,student_list,user_input_rollno,markslist,totalmark
             print('Total Marks : '+str(totalmarks[student_list.index(i)]))
             print('Grade : '+str(student_grade_list[student_list.index(i)]))
     end = time.time()
-    print('Time =',end - start)
+    return 'Time = '+ str(end - start)
 
 def main():
     policy = [80,65,50,40]
@@ -99,11 +99,12 @@ def main():
         elif user_input == '1':
             GetSummary(course_name,credits,assessments,policy,grading_summary)
         elif user_input == '2':
-            student_grade(student_list,total_marks,grade_list)
+            writing_data_in_file_time = student_grade(student_list,total_marks,grade_list)
         elif user_input == '3':
             user_input_rollno = input('Enter the roll number of user given : ')
-            search(grade_list,student_list,user_input_rollno,marks_list,total_marks)
+            search_time = search(grade_list,student_list,user_input_rollno,marks_list,total_marks)
         else:
             print('Invalid Input!')
+    return writing_data_in_file_time,search_time
 
-main()
+write_q5_time,search_q5_time = main()

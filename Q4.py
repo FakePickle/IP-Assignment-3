@@ -67,18 +67,27 @@ class IP:
         for i in range(len(rollno)):
             outline.write(str(rollno[i])+', '+str(totalmarks[i])+', '+str(self.student_grade_list[i])+'\n')
         end = time.time()
-        print('Time =',end - start)
+        return 'Time = '+ str(end - start)
 
     def search(self,user_input_rollno,markslist,totalmarks):
         start = time.time()
+        flag = True
         for i in self.student_list:
             if i == user_input_rollno:
                 print(user_input_rollno)
                 print('Marks in assessments : '+str(markslist[self.student_list.index(i)]))
                 print('Total Marks : '+str(totalmarks[self.student_list.index(i)]))
                 print('Grade : '+str(self.student_grade_list[self.student_list.index(i)]))
+                flag = True
+                break
+            else:
+                flag = False
+        if flag:
+            pass
+        else:
+            print('Student is not in the databse')
         end = time.time()
-        print('Time =',end - start)
+        return 'Time = '+ str(end - start)
 
 def main():
     policy = [80,65,50,40]
@@ -123,11 +132,12 @@ def main():
         elif user_input == '1':
             IP_Course.GetSummary(grading_summary)
         elif user_input == '2':
-            IP_Course.student_grade(student_list,total_marks)
+            writing_into_file_time = IP_Course.student_grade(student_list,total_marks)
         elif user_input == '3':
             user_input_rollno = input('Enter the roll number of user given : ')
-            IP_Course.search(user_input_rollno,marks_list,total_marks)
+            search_input_time = IP_Course.search(user_input_rollno,marks_list,total_marks)
         else:
             print('Invalid Input!')
+    return writing_into_file_time,search_input_time
 
-main()
+write_q4_time,search_q4_time = main()
