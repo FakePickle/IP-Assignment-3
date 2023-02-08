@@ -1,5 +1,5 @@
 File3.txt
-Score 11.77777777777778
-is gucci my name apple 
-['hello', 'aditya', 'harsh', 'hello', 'gucci']
+Score 9.479012345679013
+of the a be building 
+['process', 'into', 'development', 'your', 'you']
 

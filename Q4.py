@@ -64,14 +64,17 @@ class IP:
     def student_grade(self,rollno,totalmarks):
         start = time.time()
         outline = open('IP_Grades.txt','w')
+        count=0
         for i in range(len(rollno)):
             outline.write(str(rollno[i])+', '+str(totalmarks[i])+', '+str(self.student_grade_list[i])+'\n')
+            count+=1
         end = time.time()
-        return 'Time = '+ str(end - start)
+        return 'Time = '+ str(end - start),count
 
     def search(self,user_input_rollno,markslist,totalmarks):
         start = time.time()
         flag = True
+        count=0
         for i in self.student_list:
             if i == user_input_rollno:
                 print(user_input_rollno)
@@ -82,17 +85,18 @@ class IP:
                 break
             else:
                 flag = False
+            count+=1
         if flag:
             pass
         else:
             print('Student is not in the databse')
         end = time.time()
-        return 'Time = '+ str(end - start)
+        return 'Time = '+ str(end - start),count
 
 def main():
     policy = [80,65,50,40]
     assessments = [('labs',30),('midsems',15),('assignments',30),('endsem',25)]
-    max_marks = [100,100,100,100]
+    max_marks = [30,15,30,25]
     total_marks = []
     marks_list = []
     grade_list = []
