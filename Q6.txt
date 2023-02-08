@@ -1,3 +1,7 @@
+Advantages of using OO
+1.It is more secured.
+2.It requires less maintainance
+
 Advantages of using Dictionaries
 1.Code is easier to read.
 2.Data detection is faster.
@@ -20,5 +24,5 @@ Performance comparison for search operation (give in each line: value of N; time
 1. N:1001
 2. Time by OO: 0.0007426738739013672
 3. Time by dictionary: 0.0005388259887695312
-4. X is faster; fraction of time x took is: 
+4. X is faster; fraction of time x took is:
 
