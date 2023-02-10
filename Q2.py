@@ -5,6 +5,7 @@ class Off_campus:
         self.gate = Gate_number
         self.time = Time
     
+    #function for making nested dictionaries
     def dictionary(self,day_scholar_cross):
         temp_dict = {}
         temp_dict[self.name] = {
@@ -19,7 +20,8 @@ class Off_campus:
                 temp_list.append(temp_dict[self.name])
                 day_scholar_cross[k] = temp_list
 
-def creating_dictionary(dictionary,data_list):
+#reading data input from file and using it to make dictionaries
+def creating_dictionary(dictionary):
     with open('data.txt') as infile:
         line_split = infile.read().splitlines()
         for i in range(1,len(line_split)):
@@ -31,9 +33,10 @@ def creating_dictionary(dictionary,data_list):
             comma_split = Off_campus(line_split[i][0],line_split[i][1],line_split[i][2],line_split[i][3])
             comma_split.dictionary(dictionary)
 
+#fucntion to get the data by asking the user to input name
 def finding_data_by_name(dictionary):
-    user_input = input('Enter student name : ')
-    user_input_time = input('Enter current time : ')
+    user_input = input('Enter student name : ') #taking input from user for name
+    user_input_time = input('Enter current time : ') #taking input from user for the current time
     temp_list = []
     temp_list_2 = []
     outline = open('output_data_q1.txt','w')
@@ -41,19 +44,19 @@ def finding_data_by_name(dictionary):
     for k,v in dictionary.items():
         if k==user_input:
             for j in v:
-                outline.write(str([j])+'\n')
+                outline.write(str([j])+'\n') #writing everything in file
                 if j['Time']<=user_input_time:
                     temp_list.append(dictionary)
                 else:
                     temp_list_2.append(dictionary)
-    try:
+    try: #checking if the name that is taken input from user is inside the campus at that current time or not
         for k,v in temp_list[-1].items():
             for j in v:
                 if j['Crossing'] == 'ENTER':
                     return user_input+' is inside the campus at '+user_input_time
                 elif j['Crossing'] == 'EXIT':
                     return user_input+' is outside the campus at '+user_input_time
-    except:
+    except: #it will go in exception if the input time is before the first entry of that user
         try:
             for k,v in temp_list_2[0].items():
                 for j in v:
@@ -61,14 +64,15 @@ def finding_data_by_name(dictionary):
                         return user_input+' is outside the campus at '+user_input_time
                     elif j['Crossing'] == 'EXIT':
                         return user_input+' is inside the campus at '+user_input_time
-        except:    
-            print("There is no student named "+user_input)
+        except: #if there is no such name in the dictionary
+            return "There is no student named "+user_input
 
+#getting the data by taking input of start and end time
 def finding_data_by_time(dictionary):
     outline = open('output_data_q2.txt','w')
     temp_list = []
-    start_time = input("Enter the starting time : ")
-    end_time = input("Enter the ending time : ")
+    start_time = input("Enter the starting time : ") #taking input of start time
+    end_time = input("Enter the ending time : ") #taking input of end time
     for k,v in dictionary.items():
         for j in v:
             if start_time <= j['Time'] <= end_time:
@@ -76,10 +80,11 @@ def finding_data_by_time(dictionary):
     temp_list = sorted(temp_list, key = lambda x: x['Time'])
     outline.write('TA, Crossing, Gate number, Time\n')
     for i in temp_list:
-        outline.write(i+'\n')
+        outline.write(i+'\n') #writing the data in the file
 
+#function to calculate the data given by the gate number
 def finding_data_by_gate(dictionary):
-    gate_input = input("Enter the gate number of your choice : ")
+    gate_input = input("Enter the gate number of your choice : ") #taking user input for the desired gate number
     enter_gate = 0
     exit_gate = 0
     for v in dictionary.values():
@@ -92,6 +97,7 @@ def finding_data_by_gate(dictionary):
     print('The Number of people entering from that gate are :',enter_gate)
     print('The Number of people exiting from that gate are :',exit_gate)
 
+#main function where the user inputs are taken
 def main(dictionary):
     print('Welcome to the Off_campus Program\n'
     '1. Getting data by inputting student name and whether he is in the campus or not\n'
@@ -111,8 +117,8 @@ def main(dictionary):
         else:
             print("Invalid Input")
 
+#drivers code
 if __name__ == '__main__':
-    temp_dict = {}
-    Data = []
-    creating_dictionary(temp_dict,Data)
-    main(temp_dict)
+    student_dict = {}
+    creating_dictionary(student_dict)
+    main(student_dict)

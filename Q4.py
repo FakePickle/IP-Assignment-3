@@ -1,8 +1,10 @@
+#making class course where cutoff and grade is calculated
 class Course:
     def __init__(self,policy):
         self.policy = policy
         self.grade = ['A','B','C','D','F']
     
+    #final cutoff getting calculated
     def final_cutoff(self,grade_list,index):
         grade_check = [abs(grade_list[i]-grade_list[i+1]) for i in range(0,len(grade_list)-1)]
         if grade_check == []:
@@ -12,6 +14,7 @@ class Course:
             index_difference = grade_check.index(difference)+1
             return (grade_list[index_difference] + grade_list[index_difference-1])/2
 
+    #grading according the new cutoff that we get
     def doGrade(self,student_percentile):
         for i in self.policy:
             if student_percentile > i:
@@ -21,6 +24,7 @@ class Course:
                 indice = self.policy.index(i)+1
         return self.grade[indice]
 
+#class student where the percentile gets calculated
 class student:
     def __init__(self,rollno,marks_list,max_marks_list,assessments):
         self.roll_no = rollno
@@ -28,12 +32,16 @@ class student:
         self.assessments = assessments
         self.max_marks = max_marks_list
     
+    #calculation of percentile
     def calculating_marks(self):
-        student_percentile = 0
+        assessments_marks = []
         for i in range(len(self.marks)):
+            student_percentile = 0
             student_percentile += (self.assessments[i][1]*self.marks[i]/self.max_marks[i])
-        return student_percentile
+            assessments_marks.append(student_percentile)
+        return sum(assessments_marks),assessments_marks
 
+#main class where all the options are taking places
 class IP:
     def __init__(self,student_list,course_name,credit,assessments,grade_list,cutoff):
         self.student_list = student_list
@@ -43,6 +51,7 @@ class IP:
         self.cutoff = cutoff
         self.student_grade_list = grade_list
     
+    #getting summary of all data
     def GetSummary(self,grading_summary):
         print('-'*50)
         print('\t\tCOURSE INFO')
@@ -52,11 +61,13 @@ class IP:
         print('\t'+str(grading_summary))
         print('-'*50)
     
+    #writing the grades into the file
     def student_grade(self,rollno,totalmarks):
         outline = open('IP_Grades.txt','w')
         for i in range(len(rollno)):
             outline.write(str(rollno[i])+' '+str(totalmarks[i])+' '+str(self.student_grade_list[i])+'\n')
     
+    #searching student record based on the roll number taken input from user
     def search(self,user_input_rollno,markslist,totalmarks):
         for i in self.student_list:
             if i == user_input_rollno:
