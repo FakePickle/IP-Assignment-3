@@ -1,5 +1,6 @@
 import time
 
+#function to calculate the final cutoff
 def final_cutoff(policy,grade_list,index):
     grade_check = [abs(grade_list[i]-grade_list[i+1]) for i in range(0,len(grade_list)-1)]
     if grade_check == []:
@@ -8,6 +9,7 @@ def final_cutoff(policy,grade_list,index):
         difference = max(grade_check)
         return (grade_list[grade_check.index(difference)+1] + grade_list[grade_check.index(difference)])/2
 
+#function to do the grading according to the new cutoffs
 def doGrade(policy,student_percentile,grade):
     for i in policy:
         if student_percentile > i:
@@ -17,11 +19,15 @@ def doGrade(policy,student_percentile,grade):
             indice = policy.index(i)+1
     return grade[indice]
 
+#calculating the percentiles of students
 def calculating_marks(assessments,marks,max_marks):
-    student_percentile = 0
-    for i in range(len(marks)): student_percentile += (assessments[i][1]*int(marks[i])/max_marks[i])
-    return student_percentile
+    percentile_list = []
+    for i in range(len(marks)): 
+        student_percentile = (assessments[i][1]*int(marks[i])/max_marks[i]) 
+        percentile_list.append(student_percentile)
+    return sum(percentile_list),percentile_list
 
+#getting the summary of the data as an option given to user
 def GetSummary(course_name,credits,assessments,cutoff,grading_summary):
     keys = sorted(grading_summary.keys())
     grading_summary = {i: grading_summary[i] for i in keys}
@@ -39,6 +45,7 @@ def GetSummary(course_name,credits,assessments,cutoff,grading_summary):
     print()
     print('-'*50)
 
+#function to write the grades marks and roll number in a file
 def student_grade(rollno,totalmarks,student_grade_list):
     start = time.time()
     outline = open('IP_Grades.txt','w')
@@ -49,13 +56,14 @@ def student_grade(rollno,totalmarks,student_grade_list):
     end = time.time()
     return 'Time = '+ str(end - start),count
 
+#searching data based on the roll number taken input from user
 def search(student_grade_list,student_list,user_input_rollno,markslist,totalmarks):
     start = time.time()
     count = 0
     for i in student_list:
         if i == user_input_rollno:
             print(user_input_rollno)
-            print('Marks in assessments : '+str(markslist[student_list.index(i)]))
+            print('Marks in assessments : '+str(markslist[student_list.index(i)][1]))
             print('Total Marks : '+str(totalmarks[student_list.index(i)]))
             print('Grade : '+str(student_grade_list[student_list.index(i)]))
             break
@@ -63,37 +71,39 @@ def search(student_grade_list,student_list,user_input_rollno,markslist,totalmark
     end = time.time()
     return 'Time = '+ str(end - start),count
 
+
 def main():
     policy = [80,65,50,40]
     assessments = [('labs',30),('midsems',15),('assignments',30),('endsem',25)]
     max_marks = [30,15,30,25]
-    course_name = 'IP'
-    credits = 4
+    course_name = input("Enter the coruse name : ")  # taking input for course name
+    credits = int(input("Enter the number of credits for that course : ")) # taking input for credits
     grade = ['A','B','C','D','F']
-    total_marks = []
-    marks_list = []
-    student_list = []
+    total_marks = [] #total marks list
+    marks_list = [] # percentile list
+    student_list = [] #student roll number list
     with open('IP_Marks.txt') as inline:
         inline = inline.read().splitlines()
         for i in inline:
             marks = 0
             student_marks = i.split(', ')
-            student_list.append(student_marks[0])
+            student_list.append(student_marks[0])  #appending roll numbers
             for j in range(1,len(student_marks)): marks += eval(student_marks[j])
-            total_marks.append(marks)
-            marks_list.append(calculating_marks(assessments,student_marks[1::],max_marks))
+            total_marks.append(marks) # appending total marks
+            marks_list.append(calculating_marks(assessments,student_marks[1::],max_marks)) #appending total percentile and percentile per assessment
+    #updating the policy
     for i in range(len(policy)):
-        temp_list = [j for j in marks_list if abs(j - policy[i])<=2]
+        temp_list = [j[0] for j in marks_list if abs(j[0] - policy[i])<=2]
         temp_list.sort(reverse=True)
         policy[i] = final_cutoff(policy,temp_list,i)
-    grade_list = [doGrade(policy,i,grade) for i in marks_list]
+    grade_list = [doGrade(policy,i[0],grade) for i in marks_list] #grading students based on updated policy
     grading_summary = {}
     for i in grade_list:
         count = 0
         for j in grade_list:
             if i == j:
                 count += 1
-        grading_summary[i] = count
+        grading_summary[i] = count #getting the count of each and every grade
     print('\tWELCOME TO AUTOMATIC GRADING SYSTEM FOR IP COURSE\n'
         '1. Get a Summary\n'
         '2. Grade the students\n'
