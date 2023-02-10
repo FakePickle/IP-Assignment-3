@@ -31,15 +31,14 @@ class Calculating_Factors:
         d={}
         #assigning the words to their number of occurences
         for i in self.assnmt.split(' '):
-            j = i.strip(',.;: ')
+            j = i.strip(',.;:()/- ')
             if j.isalpha():
-                if i == '':
+                if j == '':
                     pass
-                elif i.lower() not in d:
-                    d[i.lower()] = 1
+                elif j.lower() not in d:
+                    d[j.lower()] = 1
                 else:
-                    d[i.lower()] += 1
-        #making a new dictionary where sorted data is stored
+                    d[j.lower()] += 1
         new_d = {}
         sorted_values = sorted(d.values(),reverse=True)
         for i in sorted_values:
@@ -66,6 +65,7 @@ class Calculating_Factors:
         for i in sentences:
             if len(i.split()) > 35 or len(i.split()) < 5:
                 total_count_sentences += 1
+        print(total_count_sentences,len(sentences))
         return total_count_sentences/len(sentences)
 
     #calculating factor 4
@@ -97,8 +97,7 @@ class Calculating_Factors:
 
     #calculating factor 5
     def factor5(self):
-        #checking if the length of assignment is greater than 750
-        if len(self.assnmt.split(' ')) > 750:
+        if len(self.assnmt) > 750:
             return 1
         else:
             return 0
@@ -127,9 +126,9 @@ def main():
     user_input_file_number = int(input('Enter the number of files you want to calculate assessment for : ')) #taking input from user to input the number of files
     with open('scores.txt','w') as outline:
         for i in range(user_input_file_number):
-            filename = input('Enter the name of the file : ') #taking input from user for the file name
+            filename = input('Enter the name of the file : ')
             factor1,factor2,factor3,factor4,factor5,sorted_dictionary,dictionary = calc(filename)
-            #writing the data in the file
+            print(calc(filename))
             outline.write(filename+'\n')
             outline.write('Score '+str(Evaluate(factor1, factor2, factor3, factor4, factor5).calculate())+'\n')
             sort = ''

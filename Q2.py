@@ -77,10 +77,11 @@ def finding_data_by_time(dictionary):
         for j in v:
             if start_time <= j['Time'] <= end_time:
                 temp_list.append(j)
+    
     temp_list = sorted(temp_list, key = lambda x: x['Time'])
     outline.write('TA, Crossing, Gate number, Time\n')
     for i in temp_list:
-        outline.write(i+'\n') #writing the data in the file
+        outline.write(i+'\n')
 
 #function to calculate the data given by the gate number
 def finding_data_by_gate(dictionary):
